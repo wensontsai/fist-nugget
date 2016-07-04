@@ -1,0 +1,15 @@
+.DS_STORE
+*.log
+
+server/config
+server/config.json
+server/config.js
+
+server/build
+server/static
+
+node_modules
+
+dist
+coverage
+
