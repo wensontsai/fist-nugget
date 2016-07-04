@@ -1,13 +1,9 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
 
-const flickrImages = [
-  "https://farm2.staticflickr.com/1553/25266806624_fdd55cecbc.jpg",
-  "https://farm2.staticflickr.com/1581/25283151224_50f8da511e.jpg",
-  "https://farm2.staticflickr.com/1653/25265109363_f204ea7b54.jpg",
-  "https://farm2.staticflickr.com/1571/25911417225_a74c8041b0.jpg",
-  "https://farm2.staticflickr.com/1450/25888412766_44745cbca3.jpg"
-];
+import {bindActionCreators} from 'redux';
+
+import  * as GalleryActions from '../../actions/gallery.js';
 
 class Gallery extends Component {
 
@@ -21,7 +17,7 @@ class Gallery extends Component {
   render() {
     const {
       gallery,
-      dispatch
+      selectImage
     } = this.props;
 
     return (
@@ -33,8 +29,7 @@ class Gallery extends Component {
         </div>
         <div className="image-scroller">
           {this.props.gallery.images.map((image, index) => (
-            <div key={index} onClick={() => dispatch({type:'IMAGE_SELECTED', image})}>
-              <img src={image}/>
+            <div key={index} onClick={() => selectImage(image)}>
             </div>
           ))}
         </div>

@@ -15,6 +15,8 @@ export default function images(state = defaultState, action) {
       return state;
     case 'IMAGE_SELECTED':
       return {...state, selectedImage: action.image};
+    case 'IMAGES_LOADED':
+      return {...state, images: action.images};
      default:
        return state;
   }
