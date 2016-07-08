@@ -1,23 +1,23 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux';
 
-import {bindActionCreators} from 'redux';
-
-import  * as GalleryActions from '../../actions/gallery.js';
+import  { selectImage, loadImages } from '../../actions/gallery.js';
 
 class Gallery extends Component {
 
   constructor(props) {
     super(props);
-    this.props.dispatch({type: 'TEST'});
-    console.log(props);
   }
-
+  
+  componentDidMount() {
+    this.props.loadImages();
+  }
 
   render() {
     const {
       gallery,
-      selectImage
+      selectImage,
+      loadImages
     } = this.props;
 
     return (
@@ -29,7 +29,8 @@ class Gallery extends Component {
         </div>
         <div className="image-scroller">
           {this.props.gallery.images.map((image, index) => (
-            <div key={index} onClick={() => selectImage(image)}>
+            <div key={index} onClick={() => this.props.selectImage(image)}>
+              <img src={image}/>
             </div>
           ))}
         </div>
