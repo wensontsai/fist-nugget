@@ -14,12 +14,6 @@ class Gallery extends Component {
   }
 
   render() {
-    const {
-      gallery,
-      selectImage,
-      loadImages
-    } = this.props;
-
     return (
       <div className="image-gallery">
         <div className="gallery-image">
@@ -39,10 +33,15 @@ class Gallery extends Component {
   }
 };
 
-function mapStateToProps(state) {
-  return {
-    gallery: state.gallery
-  }
-}
+// function mapStateToProps(state) {
+//   return {
+//     gallery: state.gallery
+//   }
+// }
 
-export default connect(mapStateToProps)(Gallery)
+// export default connect(mapStateToProps)(Gallery)
+
+export default connect(
+  (state) => ({ gallery: state.gallery }),
+  { selectImage, loadImages }
+)(Gallery);

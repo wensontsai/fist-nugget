@@ -5,14 +5,22 @@ import { fetchImages } from '../utils/flickr';
 
 
 export function* loadImages() {
-  const images = yield fetchImages();
-  yield put({type: 'IMAGES_LOADED', images})
+  try {
+    console.log('inside saga load images->');
+    const images = yield fetchImages();
+    yield put({type: 'IMAGES_LOADED', images: images});
+    console.log('i fetched these images->', images);
+    yield put({type: 'IMAGE_SELECTED', image: images[0]});
+  } catch(error) {
+    yield put({type: 'IMAGE_LOAD_FAILURE', error});
+  }
 }
 
 export function* watchForLoadImages() {
   while(true) {
+    console.log('inside saga watch for load images->');
     yield take('LOAD_IMAGES');
-    yield loadImages();
+    yield fork(loadImages);
   }
 }
 
