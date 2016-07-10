@@ -10,7 +10,7 @@ class Gallery extends Component {
   }
   
   componentDidMount() {
-    this.props.loadImages();
+    // this.props.loadImages();
   }
 
   render() {

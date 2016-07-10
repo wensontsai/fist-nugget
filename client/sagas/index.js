@@ -1,33 +1,41 @@
 import { takeEvery } from 'redux-saga';
 import { take, put, call, fork, select } from 'redux-saga/effects';
 
-import { fetchImages } from '../utils/flickr';
+import gallerySagas from './gallery';
+import imagesSagas from './images';
 
 
-export function* loadImages() {
-  try {
-    console.log('inside saga load images->');
-    const images = yield fetchImages();
-    yield put({type: 'IMAGES_LOADED', images: images});
-    console.log('i fetched these images->', images);
-    yield put({type: 'IMAGE_SELECTED', image: images[0]});
-  } catch(error) {
-    yield put({type: 'IMAGE_LOAD_FAILURE', error});
-  }
-}
-
-export function* watchForLoadImages() {
-  while(true) {
-    console.log('inside saga watch for load images->');
-    yield take('LOAD_IMAGES');
-    yield fork(loadImages);
-  }
+function startSagas(...sagas) {
+  let allFuncs = [];
+  sagas.map(saga => saga.map(func => {
+    for(let x in func) {
+      allFuncs.push(fork(func[x]));
+    }
+  }));
+  return allFuncs;
 }
 
 
-export default function* root() {
-  yield [
-    fork(loadImages),
-    fork(watchForLoadImages)
-  ]
-}
+export default function* rootSaga() {
+  yield startSagas([
+    gallerySagas,
+    imagesSagas
+  ]);
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
