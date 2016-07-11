@@ -6,11 +6,11 @@ import imagesSagas from './images';
 
 
 function startSagas(sagas) {
-  let allFuncs = [];
-  sagas.map(saga => {
-    for(let func in saga) {allFuncs.push(fork(saga[func]));}
-  });
-  return allFuncs;
+  return sagas.map(saga => Object.keys(saga)
+    .map(function (func) {return fork(saga[func])} ) )
+    .reduce(function(a, b) {
+      return a.concat(b) 
+    });
 }
 
 
