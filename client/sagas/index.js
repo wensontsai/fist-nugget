@@ -5,13 +5,11 @@ import gallerySagas from './gallery';
 import imagesSagas from './images';
 
 
-function startSagas(...sagas) {
+function startSagas(sagas) {
   let allFuncs = [];
-  sagas.map(saga => saga.map(func => {
-    for(let x in func) {
-      allFuncs.push(fork(func[x]));
-    }
-  }));
+  sagas.map(saga => {
+    for(let func in saga) {allFuncs.push(fork(saga[func]));}
+  });
   return allFuncs;
 }
 
