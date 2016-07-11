@@ -7,10 +7,8 @@ import imagesSagas from './images';
 
 function startSagas(sagas) {
   return sagas.map(saga => Object.keys(saga)
-    .map(function (func) {return fork(saga[func])} ) )
-    .reduce(function(a, b) {
-      return a.concat(b) 
-    });
+    .map(function(func) {return fork(saga[func])}) 
+  ).reduce(function(a, b) {return a.concat(b)});
 }
 
 
@@ -20,20 +18,3 @@ export default function* rootSaga() {
     imagesSagas
   ]);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
